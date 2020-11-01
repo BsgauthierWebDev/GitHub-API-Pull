@@ -5,8 +5,8 @@ function getUserInfo(selection) {
   fetch(`https://api.github.com/users/${selection}/repos`)
   .then(response => response.json())
   .then(responseJson => displayResults(responseJson))
-  .catch(error => alert("Sorry, I couldn't find that."));
-}
+  // .catch(error => alert("Sorry, I couldn't find that."));
+;}
 
 //Function to grab the user input
 function watchForm() {
@@ -21,14 +21,15 @@ function watchForm() {
 function displayResults(responseJson) {
   //Clear previous results
   console.log(responseJson);
-  $(".display-items").empty();
-  //Loop through the array
-  for (let i = 0; i < responsJson.value.length; i++) {
-  //Create new list items for each repo 
-    $(".display-items").append(
-      `<li><h3><a href="${responseJson.value[i].html_url}">${responseJson.value[i].name}</a></h3></li>
-      `
-    )};
+  $(".repo-area").empty();
+  //Go through all repos listed and add a link to the DOM
+  responseJson.forEach(obj => 
+    $(".repo-area").append(
+      `<li><a href="${obj.url}">${obj.name}</a></li>`
+    )
+  );
+  //Make username equal to search value
+  $(".username").text(`${username}`);
 }
 
 //Tells the user the app is ready to go
